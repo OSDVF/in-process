@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+.navbar
+  span.site-name
+    font-family: 'Staatliches', Ubuntu,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Cantarell,Fira Sans,Droid Sans, sans;
+    font-size 1.6rem
+    font-weight 600
+    color $textColor
+    position relative
+    vertical-align middle
+.dark span.site-name
+  color: #BBBBBB
+
+div .iconfont
+  font-family iconfont,Ubuntu,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif!important;
+
+#app~div:not(.medium-zoom-overlay)
+  opacity: 0.2;
+  overflow hidden
+
+.theme-container .loading-wrapper
+  pointer-events: none
+.text-muted
+  color rgb(127,127,127)!important
+.text-primary
+  color: $accentColor !important
+video
+  max-width 100%
+  border-radius: 4px
+  box-shadow: 1px 1px 2px #00000050, 0 0 25px #00000020
+.page
+  img
+    &.inline
+      display inline
+      margin .5rem
+    &.left
+      float left
+    &.right
+      float right
+.center
+  margin 0 auto
+  display block
+.dark img.night-invert
+  -webkit-filter: invert(1);
+  filter: invert(1)
+.dark kbd
+  color: #333
+
+.p-1
+  padding 1rem
+  
+#app
+  @import "./tooltips"
+  @import "./comments"

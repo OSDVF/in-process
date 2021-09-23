@@ -1,0 +1,5 @@
+<Files ~ "\.pem$">
+  Order allow,deny
+  Deny from all
+</Files>
+ErrorDocument 404 /404.html

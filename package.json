@@ -1,0 +1,37 @@
+{
+  "name": "in-process",
+  "version": "0.0.1",
+  "description": "Rozcestníkové stránky kapely",
+  "author": "O.S.DV.F",
+  "repository": "https://github.com/OSDVF/in-process",
+  "scripts": {
+    "dev": "vuepress dev . --open --host 0.0.0.0",
+    "build": "vuepress build .",
+    "clean": "del .\\public /Q /S",
+    "upload": "uploadProcess.bat",
+    "server": "cd public && php -S localhost:8080"
+  },
+  "devDependencies": {
+    "@vue/composition-api": "^1.0.0-rc.1",
+    "@vuepress-reco/core": "^1.6.2",
+    "@vuepress-reco/vuepress-plugin-back-to-top": "^1.6.0",
+    "@vuepress-reco/vuepress-plugin-comments": "^1.6.0",
+    "@vuepress-reco/vuepress-plugin-loading-page": "^1.6.0",
+    "@vuepress-reco/vuepress-plugin-pagation": "^1.6.0",
+    "@vuepress/plugin-blog": "1.9.4",
+    "@vuepress/plugin-medium-zoom": "^1.8.2",
+    "docsearch.js": "2.6.3",
+    "esm": "^3.2.25",
+    "markdown-it-decorate": "^1.2.2",
+    "markdown-it-kbd": "^2.2.2",
+    "markdown-it-sub-alt": "^1.0.0",
+    "md5": "2.3.0",
+    "vue-click-outside": "1.1.0",
+    "vue-demi": "^0.6.0",
+    "vuepress": "^1.8.2",
+    "vuepress-plugin-smooth-scroll": "^0.0.10"
+  },
+  "dependencies": {
+    "tippy.js": "^6.3.0"
+  }
+}

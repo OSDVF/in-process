@@ -1,0 +1,355 @@
+<template>
+  <ClientOnly>
+    <div class="home-blog">
+      <div class="hero" :style="{ ...bgImageStyle }">
+        <div>
+          <ModuleTransition>
+            <img class="hero-img" v-if="recoShowModule && $frontmatter.heroImage" :style="heroImageStyle || {}" :src="$withBase($frontmatter.heroImage)" alt="hero" />
+          </ModuleTransition>
+
+          <ModuleTransition delay="0.08">
+            <p v-if="recoShowModule && $frontmatter.tagline !== null" class="description">
+              {{ $frontmatter.tagline || $description || 'Welcome to your vuePress-theme-reco site' }}
+            </p>
+          </ModuleTransition>
+        </div>
+      </div>
+
+      <ModuleTransition delay="0.16">
+        <div v-show="recoShowModule" class="home-blog-wrapper">
+          <div class="blog-list">
+            <Content v-show="recoShowModule" class="home-center" custom />
+            <ModuleTransition delay="0.24">
+              <!-- Seznam příspěvků -->
+              <post-list :data="$recoPosts" :currentPage="currentPage"></post-list>
+              <!-- Stránkování -->
+              <pagation class="pagation" :total="$recoPosts.length" :currentPage="currentPage" @getCurrentPage="getCurrentPage" />
+            </ModuleTransition>
+          </div>
+          <img src="/images/Timeline.svg" style="left: -15rem;
+          opacity: 0.5;
+          position: absolute" />
+          <div class="info-wrapper">
+            <PersonalInfo />
+            <hr>
+            <h4 v-if="$themeConfig.friendLink && $themeConfig.friendLink.length !== 0">
+              <i class="fas fa-paperclip" style="color: gray" />&ensp;{{homeBlogCfg.friendLink}}
+            </h4>
+            <FriendLink />
+          </div>
+        </div>
+      </ModuleTransition>
+    </div>
+  </ClientOnly>
+</template>
+
+<script>
+import TagList from "@theme/components/TagList";
+import FriendLink from "@theme/components/FriendLink";
+import PostList from "@theme/components/PostList";
+import pagination from "@theme/mixins/pagination";
+import { ModuleTransition, RecoIcon } from "@vuepress-reco/core/lib/components";
+import PersonalInfo from "@theme/components/PersonalInfo";
+import { getOneColor } from "@theme/helpers/other";
+
+export default {
+  mixins: [pagination],
+  components: {
+    PostList,
+    TagList,
+    FriendLink,
+    ModuleTransition,
+    PersonalInfo,
+    RecoIcon,
+  },
+  data() {
+    return {
+      recoShow: false,
+      currentPage: 1,
+      tags: [],
+    };
+  },
+  computed: {
+    recoShowModule() {
+      return this.$parent.recoShowModule;
+    },
+    homeBlogCfg() {
+      return this.$recoLocales.homeBlog;
+    },
+    actionLink() {
+      const { actionLink: link, actionText: text } = this.$frontmatter;
+
+      return {
+        link,
+        text,
+      };
+    },
+    heroImageStyle() {
+      return this.$frontmatter.heroImageStyle || {};
+    },
+    bgImageStyle() {
+      const initBgImageStyle = {
+        textAlign: "center",
+        overflow: "hidden",
+        background: "url(images/background.JPG) center/cover no-repeat",
+      };
+      const { bgImageStyle } = this.$frontmatter;
+
+      return bgImageStyle
+        ? { ...initBgImageStyle, ...bgImageStyle }
+        : initBgImageStyle;
+    },
+    heroHeight() {
+      return document.querySelector(".hero").clientHeight;
+    },
+  },
+  mounted() {
+    this.recoShow = true;
+    this._setPage(this._getStoragePage());
+  },
+  methods: {
+    getCurrentPage(page) {
+      this._setPage(page);
+      setTimeout(() => {
+        window.scrollTo(0, this.heroHeight);
+      }, 100);
+    },
+    getPages() {
+      let pages = this.$site.pages;
+      pages = pages.filter((item) => {
+        const { home, date } = item.frontmatter;
+        return !(home == true || date === undefined);
+      });
+      // reverse()是为了按时间最近排序排序
+      this.pages = pages.length == 0 ? [] : pages;
+    },
+    getPagesByTags(tagInfo) {
+      this.$router.push({ path: tagInfo.path });
+    },
+    _setPage(page) {
+      this.currentPage = page;
+      this.$page.currentPage = page;
+      this._setStoragePage(page);
+    },
+    getOneColor,
+  },
+};
+</script>
+
+<style lang="stylus">
+.home-blog {
+  padding: 0;
+  margin: 0px auto;
+
+  .comments-wrapper {
+    max-width: $contentWidth;
+    margin: 0 auto;
+    padding: 1rem 2.5rem;
+
+    @media (max-width: $MQNarrow) {
+      padding: 2rem;
+    }
+
+    @media (max-width: $MQMobileNarrow) {
+      padding: 1.5rem;
+    }
+  }
+
+  .hero {
+    margin: $navbarHeight auto 0;
+    position: relative;
+    box-sizing: border-box;
+    padding: 0 20px;
+    height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    color: white;
+    text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.5), 0px 0px 3px rgba(0, 0, 0, 0.9), 0px -5px 35px rgba(255, 255, 255, 0.3);
+
+    .hero-img {
+      max-width: 300px;
+      margin: 0 auto 1.5rem;
+    }
+
+    h1 {
+      display: block;
+      margin: 0 auto 1.8rem;
+      font-size: 1.8rem;
+    }
+
+    .description {
+      margin: 1.8rem auto;
+      font-size: 1rem;
+      line-height: 1.3;
+    }
+  }
+
+  .home-blog-wrapper {
+    display: flex;
+    align-items: flex-start;
+    margin: 20px auto;
+    padding: 0 20px;
+    max-width: $homePageWidth;
+
+    .blog-list {
+      flex: auto;
+      width: 0;
+
+      .abstract-wrapper {
+        .abstract-item:last-child {
+          margin-bottom: 0px;
+        }
+      }
+    }
+
+    .info-wrapper {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 70px;
+      overflow: hidden;
+      transition: all 0.3s;
+      margin-left: 15px;
+      flex: 0 0 300px;
+      height: auto;
+      box-shadow: var(--box-shadow);
+      border-radius: $borderRadius;
+      box-sizing: border-box;
+      padding: 1.3rem 1rem;
+      background: var(--background-color);
+
+      &:hover {
+        box-shadow: var(--box-shadow-hover);
+      }
+
+      h4 {
+        color: var(--text-color);
+      }
+
+      .category-wrapper {
+        list-style: none;
+        padding-left: 0;
+
+        .category-item {
+          margin-bottom: 0.4rem;
+          padding: 0.4rem 0.8rem;
+          transition: all 0.5s;
+          border-radius: $borderRadius;
+          box-shadow: var(--box-shadow);
+          background-color: var(--background-color);
+
+          &:hover {
+            transform: scale(1.04);
+
+            a {
+              color: $accentColor;
+            }
+          }
+
+          a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-color);
+
+            .post-num {
+              width: 1.6rem;
+              height: 1.6rem;
+              text-align: center;
+              line-height: 1.6rem;
+              border-radius: $borderRadius;
+              background: #eee;
+              font-size: 13px;
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $MQMobile) {
+  .home-blog {
+    .hero {
+      height: 450px;
+
+      img {
+        max-height: 210px;
+        margin: 2rem auto 1.2rem;
+      }
+
+      h1 {
+        margin: 0 auto 1.8rem;
+        font-size: 2rem;
+      }
+
+      .description {
+        font-size: 1.2rem;
+      }
+
+      .action-button {
+        font-size: 1rem;
+        padding: 0.6rem 1.2rem;
+      }
+    }
+
+    .home-blog-wrapper {
+      display: block !important;
+
+      .blog-list {
+        width: auto;
+      }
+
+      .info-wrapper {
+        // display none!important
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+@media (max-width: $MQMobileNarrow) {
+  .home-blog {
+    .hero {
+      height: 450px;
+
+      img {
+        max-height: 210px;
+        margin: 2rem auto 1.2rem;
+      }
+
+      h1 {
+        margin: 0 auto 1.8rem;
+        font-size: 2rem;
+      }
+
+      h1, .description, .action {
+        // margin: 1.2rem auto;
+      }
+
+      .description {
+        font-size: 1.2rem;
+      }
+
+      .action-button {
+        font-size: 1rem;
+        padding: 0.6rem 1.2rem;
+      }
+    }
+
+    .home-blog-wrapper {
+      display: block !important;
+
+      .blog-list {
+        width: auto;
+      }
+
+      .info-wrapper {
+        // display none!important
+        margin-left: 0;
+      }
+    }
+  }
+}
+</style>
