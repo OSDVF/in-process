@@ -6,4 +6,4 @@ categories:
 ---
 
 Na Sjezdu evangelické mládeže v Táboře budeme mít koncert v čajovnovém stanu. Toš přijďte 😉
-![Čajovnový koncert 2021](/images/cajovnovy.png)
+![Čajovnový koncert 2021](/images/cajovnovy.jpg)

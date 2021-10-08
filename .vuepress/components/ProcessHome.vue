@@ -1,19 +1,7 @@
 <template>
   <ClientOnly>
     <div class="home-blog">
-      <div class="hero" :style="{ ...bgImageStyle }">
-        <div>
-          <ModuleTransition>
-            <img class="hero-img" v-if="recoShowModule && $frontmatter.heroImage" :style="heroImageStyle || {}" :src="$withBase($frontmatter.heroImage)" alt="hero" />
-          </ModuleTransition>
-
-          <ModuleTransition delay="0.08">
-            <p v-if="recoShowModule && $frontmatter.tagline !== null" class="description">
-              {{ $frontmatter.tagline || $description || 'Welcome to your vuePress-theme-reco site' }}
-            </p>
-          </ModuleTransition>
-        </div>
-      </div>
+      <img class="hero" src="images/background-small.jpg"/>
 
       <ModuleTransition delay="0.16">
         <div v-show="recoShowModule" class="home-blog-wrapper">
@@ -87,18 +75,6 @@ export default {
     heroImageStyle() {
       return this.$frontmatter.heroImageStyle || {};
     },
-    bgImageStyle() {
-      const initBgImageStyle = {
-        textAlign: "center",
-        overflow: "hidden",
-        background: "url(images/background.JPG) center/cover no-repeat",
-      };
-      const { bgImageStyle } = this.$frontmatter;
-
-      return bgImageStyle
-        ? { ...initBgImageStyle, ...bgImageStyle }
-        : initBgImageStyle;
-    },
     heroHeight() {
       return document.querySelector(".hero").clientHeight;
     },
@@ -156,21 +132,18 @@ export default {
   }
 
   .hero {
-    margin: $navbarHeight auto 0;
-    position: relative;
+    object-fit cover
+    height unset
+    margin:0;
+    padding "calc(%s - 1rem) 0 0 0" % $navbarHeight
+    width 100%
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
     box-sizing: border-box;
-    padding: 0 20px;
-    height: 100vh;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    color: white;
-    text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.5), 0px 0px 3px rgba(0, 0, 0, 0.9), 0px -5px 35px rgba(255, 255, 255, 0.3);
-
-    .hero-img {
-      max-width: 300px;
-      margin: 0 auto 1.5rem;
-    }
+    filter brightness(0.9)
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
 
     h1 {
       display: block;
@@ -188,7 +161,7 @@ export default {
   .home-blog-wrapper {
     display: flex;
     align-items: flex-start;
-    margin: 20px auto;
+    margin: 50vh auto 20px;
     padding: 0 20px;
     max-width: $homePageWidth;
 
@@ -201,6 +174,12 @@ export default {
           margin-bottom: 0px;
         }
       }
+    }
+
+    .home-center {
+      font-size 1rem
+      color white
+      text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.5), 0px 0px 15px black, 0px -5px 35px rgba(255, 255, 255, 0.3);
     }
 
     .info-wrapper {
@@ -272,26 +251,7 @@ export default {
 @media (max-width: $MQMobile) {
   .home-blog {
     .hero {
-      height: 450px;
-
-      img {
-        max-height: 210px;
-        margin: 2rem auto 1.2rem;
-      }
-
-      h1 {
-        margin: 0 auto 1.8rem;
-        font-size: 2rem;
-      }
-
-      .description {
-        font-size: 1.2rem;
-      }
-
-      .action-button {
-        font-size: 1rem;
-        padding: 0.6rem 1.2rem;
-      }
+        min-height : 600px;
     }
 
     .home-blog-wrapper {
@@ -312,30 +272,7 @@ export default {
 @media (max-width: $MQMobileNarrow) {
   .home-blog {
     .hero {
-      height: 450px;
-
-      img {
-        max-height: 210px;
-        margin: 2rem auto 1.2rem;
-      }
-
-      h1 {
-        margin: 0 auto 1.8rem;
-        font-size: 2rem;
-      }
-
-      h1, .description, .action {
-        // margin: 1.2rem auto;
-      }
-
-      .description {
-        font-size: 1.2rem;
-      }
-
-      .action-button {
-        font-size: 1rem;
-        padding: 0.6rem 1.2rem;
-      }
+      min-height: 600px;
     }
 
     .home-blog-wrapper {
