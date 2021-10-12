@@ -26,7 +26,7 @@
             :href="editLink"
             target="_blank"
             rel="noopener noreferrer"
-          >{{ editLinkText }}</a>
+          >{{ editLinkText }}</a>&nbsp;
           <OutboundLink/>
         </div>
 
@@ -72,7 +72,6 @@
         </p>
       </div>
     </ModuleTransition>
-    <div class="page-edit"><small>Všechny komentáře jsou veřeně viditelné 👀. Pokud chcete něco říct v soukromí, <router-link to="/docs/contact.html">můžete tady.</router-link></small></div>
     <ModuleTransition delay="0.32">
       <Comments v-if="recoShowModule" :isShowComments="shouldShowComments"/>
     </ModuleTransition>

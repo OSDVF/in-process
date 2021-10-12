@@ -7,7 +7,7 @@
       v-for="(item, index) in socialLinks"
       :key="index"
     >
-      <a :href="item.link"><i :class="item.icon" :style="{ color: item.color }"></i></a>
+      <a :href="item.link" target="_blank"><i :class="item.icon" :style="{ color: item.color }"></i></a>
     </li>
   </ul>
 </div>

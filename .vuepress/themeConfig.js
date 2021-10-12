@@ -39,4 +39,11 @@ module.exports = {
   searchMaxSuggestions: 10,
   lastUpdated: "Naposledy aktualizováno",
   startYear: "2021",
+
+  blogConfig :{
+    socialLinks: [     // Information bar displays social information
+      { icon: 'fab fa-youtube', link: 'https://www.youtube.com/channel/UC1P4UzQVhkA6EbqoTP7ZKYA', color: 'red' },
+      { icon: 'fab fa-facebook', link: 'https://fb.me/vprocesu', color: '#3498db' }
+    ]
+  }
 }

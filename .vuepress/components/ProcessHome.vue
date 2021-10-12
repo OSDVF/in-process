@@ -14,9 +14,6 @@
               <pagation class="pagation" :total="$recoPosts.length" :currentPage="currentPage" @getCurrentPage="getCurrentPage" />
             </ModuleTransition>
           </div>
-          <img src="/images/Timeline.svg" style="left: -15rem;
-          opacity: 0.5;
-          position: absolute" />
           <div class="info-wrapper">
             <PersonalInfo />
             <hr>
@@ -179,7 +176,13 @@ export default {
     .home-center {
       font-size 1rem
       color white
-      text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.5), 0px 0px 15px black, 0px -5px 35px rgba(255, 255, 255, 0.3);
+      & > p {
+        font-weight bold
+        color #54402E
+      }
+      & > h1, & > h2 {
+        text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.5), 0px 0px 15px black, 0px -5px 35px rgba(255, 255, 255, 0.3);
+      }
     }
 
     .info-wrapper {
@@ -288,5 +291,8 @@ export default {
       }
     }
   }
+}
+.dark .home-blog > .home-blog-wrapper .home-center > p {
+  color white
 }
 </style>
