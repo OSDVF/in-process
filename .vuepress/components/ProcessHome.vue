@@ -1,31 +1,40 @@
 <template>
-  <ClientOnly>
-    <div class="home-blog">
-      <img class="hero" src="images/background-small.jpg"/>
+  <div class="home-blog">
+    <img class="hero" src="images/background-small.jpg" />
 
-      <ModuleTransition delay="0.16">
-        <div v-show="recoShowModule" class="home-blog-wrapper">
-          <div class="blog-list">
-            <Content v-show="recoShowModule" class="home-center" custom />
-            <ModuleTransition delay="0.24">
-              <!-- Seznam příspěvků -->
-              <post-list :data="$recoPosts" :currentPage="currentPage"></post-list>
-              <!-- Stránkování -->
-              <pagation class="pagation" :total="$recoPosts.length" :currentPage="currentPage" @getCurrentPage="getCurrentPage" />
-            </ModuleTransition>
-          </div>
+    <ModuleTransition delay="0.16">
+      <div v-show="recoShowModule" class="home-blog-wrapper">
+        <div class="blog-list">
+          <Content v-show="recoShowModule" class="home-center" custom />
+          <!-- Seznam příspěvků -->
+          <post-list :data="$recoPosts" :currentPage="currentPage"></post-list>
+          <!-- Stránkování -->
+          <pagation
+            class="pagation"
+            :total="$recoPosts.length"
+            :currentPage="currentPage"
+            @getCurrentPage="getCurrentPage"
+          />
+        </div>
+        <ModuleTransition delay="0.24">
           <div class="info-wrapper">
             <PersonalInfo />
-            <hr>
-            <h4 v-if="$themeConfig.friendLink && $themeConfig.friendLink.length !== 0">
-              <i class="fas fa-paperclip" style="color: gray" />&ensp;{{homeBlogCfg.friendLink}}
+            <hr />
+            <h4
+              v-if="
+                $themeConfig.friendLink && $themeConfig.friendLink.length !== 0
+              "
+            >
+              <i class="fas fa-paperclip" style="color: gray" />&ensp;{{
+                homeBlogCfg.friendLink
+              }}
             </h4>
             <FriendLink />
           </div>
-        </div>
-      </ModuleTransition>
-    </div>
-  </ClientOnly>
+        </ModuleTransition>
+      </div>
+    </ModuleTransition>
+  </div>
 </template>
 
 <script>
@@ -129,18 +138,18 @@ export default {
   }
 
   .hero {
-    object-fit cover
-    height unset
-    margin:0;
-    padding "calc(%s - 1rem) 0 0 0" % $navbarHeight
-    width 100%
+    object-fit: cover;
+    height: unset;
+    margin: 0;
+    padding: 'calc(%s - 1rem) 0 0 0' % $navbarHeight;
+    width: 100%;
     position: absolute;
     right: 0;
     left: 0;
     top: 0;
     box-sizing: border-box;
-    filter brightness(0.9)
-    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+    filter: brightness(0.9);
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
 
     h1 {
       display: block;
@@ -174,12 +183,14 @@ export default {
     }
 
     .home-center {
-      font-size 1rem
-      color white
+      font-size: 1rem;
+      color: white;
+
       & > p {
-        font-weight bold
-        color #54402E
+        font-weight: bold;
+        color: #54402E;
       }
+
       & > h1, & > h2 {
         text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.5), 0px 0px 15px black, 0px -5px 35px rgba(255, 255, 255, 0.3);
       }
@@ -254,7 +265,7 @@ export default {
 @media (max-width: $MQMobile) {
   .home-blog {
     .hero {
-        min-height : 600px;
+      min-height: 600px;
     }
 
     .home-blog-wrapper {
@@ -292,7 +303,8 @@ export default {
     }
   }
 }
+
 .dark .home-blog > .home-blog-wrapper .home-center > p {
-  color white
+  color: white;
 }
 </style>
