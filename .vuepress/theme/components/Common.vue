@@ -1,9 +1,6 @@
 <template>
   <div class="theme-container" :class="pageClasses">
     <div v-if="!absoluteEncryption">
-      <transition name="fade">
-        <LoadingPage v-show="firstLoad" class="loading-wrapper" />
-      </transition>
 
       <transition name="fade">
         <Password v-if="!isHasKey" class="password-wrapper-out" key="out" />
